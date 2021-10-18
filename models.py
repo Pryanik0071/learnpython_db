@@ -10,7 +10,7 @@ class User(Base):
     email = Column(String(120), unique=True)
 
     def __repr__(self):
-        return f'<User {self.name} {self.email}>'
+        return f'User {self.id}: {self.name} {self.email} {self.salary}'
 
 
 if __name__ == "__main__":
