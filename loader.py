@@ -29,7 +29,49 @@ def read_csv(filename):
             save_salary_data(row)
 
 
+def save_salary_data2(data):
+    db_session.bulk_insert_mappings(Salary, data)
+    db_session.commit()
+
+
+def read_csv2(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        fields = ['name', 'city', 'address', 'company',
+                  'job', 'phone_number', 'email', 'date_of_birth',
+                  'salary']
+        reader = csv.DictReader(f, fields, delimiter=';')
+        salary_data = []
+        for row in reader:
+            salary_data.append(row)
+        save_salary_data2(salary_data)
+
+
+def save_salary_data3(row):
+    salary = Salary(**row)
+    db_session.add(salary)
+    db_session.commit()
+
+
+def read_csv3(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        fields = ['name', 'city', 'address', 'company',
+                  'job', 'phone_number', 'email', 'date_of_birth',
+                  'salary']
+        reader = csv.DictReader(f, fields, delimiter=';')
+        for row in reader:
+            print(row)
+            save_salary_data3(row)
+
+
 if __name__ == '__main__':
+    # start = time.time()
+    # read_csv('salary.csv')
+    # print('Данные1 загружены за ', time.time() - start)
+
+    # start = time.time()
+    # read_csv2('salary.csv')
+    # print('Данные2 загружены за ', time.time() - start)
+
     start = time.time()
-    read_csv('salary.csv')
-    print('Данные загружены за ', time.time() - start)
+    read_csv3('salary.csv')
+    print('Данные3 загружены за ', time.time() - start)
